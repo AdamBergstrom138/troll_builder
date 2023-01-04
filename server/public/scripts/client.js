@@ -4,6 +4,7 @@ function onReady() {
   console.log("JS_Troll_Builder_CRUD");
   fetchAndRenderTroll()
   $('body').on('click', '#addTrollButton', buildTroll);
+  $('body').on('click', '.delete', deleteTroll);
 }
 // GET and render troll data to the table
 function fetchAndRenderTroll(){
@@ -21,6 +22,7 @@ function fetchAndRenderTroll(){
         <td>${troll.notes}</td>
         <td>${troll.head}</td>
         <td>${troll.body}</td>
+        <td><button type="button" class="delete">DELETE</button></td>
       </tr>
       `);
     }
@@ -52,26 +54,34 @@ function buildTroll(){
   });
   $('#trollNameIn').val('');
   $('#trollNotesIn').val('');
-}
+};
 
-// function submit(){
-//   console.log('in submit');
-//   letNewTask = $('#toDoIn').val();
-//   letNewEdit = 'none';
-//   letNewComplete = 'N';
-//   let taskToSend = {
-//       task: letNewTask,
-//       edit: letNewEdit,
-//       complete: letNewComplete
-//   };
+// Delete
+function deleteTroll(){
+  console.log('in delete');
+  let idToDelete = $(this).closest('tr').data().id;
+  console.log(idToDelete);
+  $.ajax({
+    method: 'DELETE',
+    url: `/troll/${idToDelete}`
+  }).then((response) => {
+    fetchAndRenderTroll();
+  }).catch((err) => {
+    console.log('Error in deleteTroll', err);
+  });
+};
+
+// function deleteToDo(){
+//   console.log('in delete');
+//   let idToDelete = $(this).parent().parent().data().id;
+//   console.log(idToDelete);
 //   $.ajax({
-//       method: 'POST',
-//       url: '/todo',
-//       data: taskToSend
+//     method: 'DELETE',
+//     url: `/todo/${idToDelete}`
 //   }).then((response) => {
 //       fetchAndRenderToDo();
 //   }).catch((error) => {
-//       console.log('Error in submit:', error);
-//   });
-//   $('#toDoIn').val('');
+//     console.log('Error in deleteToDo:', error);
+//   })
 // }
+

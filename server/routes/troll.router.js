@@ -38,30 +38,40 @@ trollRouter.post('/', (req, res) =>{
             console.log('Error in POST /troll', dbErr);
         });
 });
-
-
-// todoRouter.post('/', (req, res) => {
-//     console.log('POST /todo');
-//     console.log(req.body);
-//     let sqlQuery = `
-//     INSERT INTO "todo"
-//     ("task", "edit", "complete")
-//     VALUES
-//     ($1, $2, $3);
-//     `
-//     let sqlValues = [req.body.task, req.body.edit, req.body.complete];
-//     pool.query(sqlQuery, sqlValues)
-//         .then((dbRes) => {
-//             res.sendStatus(201);
-//         }).catch((dbErr) => {
-//             console.log('Error in POST /todo', dbErr);
-//         })
-// })
-
 // PUT
 
 // DELETE
+trollRouter.delete('/:id', (req, res) => {
+    console.log(req.params);
+    let idToDelete = req.params.id;
+    let sqlQuery = `
+    DELETE FROM "troll"
+    WHERE "id"=$1;
+    `
+    let sqlValues = [idToDelete];
+    pool.query(sqlQuery, sqlValues)
+        .then((dbRes) => {
+            res.sendStatus(200);
+        }).catch((dbErr) => {
+            console.log('Error in Delete', dbErr);
+        });
+});
 
-
+// todoRouter.delete('/:id', (req, res) => {
+//     console.log(req.params);
+//     let idToDelete = req.params.id;
+//     let sqlQuery = `
+//     DELETE FROM "todo"
+//     WHERE "id"=$1;
+//     `
+//     let sqlValues = [idToDelete];
+//     pool.query(sqlQuery, sqlValues)
+//         .then((dbRes) => {
+//             res.sendStatus(200);
+//         })
+//         .catch((dbErr) => {
+//             console.log('Error in Delete:', dbErr);
+//         })
+// });
 // *****
 module.exports = trollRouter;
