@@ -1,15 +1,17 @@
 -- Table Schema Template:
-CREATE TABLE "some_thing" (
+CREATE TABLE "troll" (
   "id" SERIAL PRIMARY KEY,
-  "name" VARCHAR(500) NOT NULL,
-  "is_nifty" BOOLEAN
+  "name" VARCHAR(250) NOT NULL,
+  "notes" VARCHAR(250),
+  "head" BOOLEAN,
+  "body" BOOLEAN
 );
 
 -- Seed Data Template:
-INSERT INTO "some_thing"
-  ("name", "is_nifty")
+INSERT INTO "troll"
+  ("name", "notes", "head", "body")
   VALUES
-  ('Gizmo', true),
-  ('Gadget', true),
-  ('Bits', true),
-  ('Bobs', false);
+  ('Gizmo', 'hates water', true, true),
+  ('Balthazar', 'likes Romeo', true, true),
+  ('Icarus', 'likes to fly', true, true),
+  ('Meatwad', 'member of an elite squad', true, false);

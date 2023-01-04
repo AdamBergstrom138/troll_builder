@@ -1,4 +1,4 @@
-# Full-Stack CRUD Starter
+# Full-Stack CRUD 
 
 ##### Tech Stack:
 
