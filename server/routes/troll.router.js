@@ -20,23 +20,43 @@ trollRouter.get('/', (req, res) => {
             console.log('error getting trolls', dbErr);
         });
 });
-
-// todoRouter.get('/', (req, res) => {
-//     console.log('in get');
-//     let sqlQuery = `
-//       SELECT * FROM "todo" 
-//         ORDER BY "id";
-//     `;
-//     pool.query(sqlQuery)
-//       .then((dbRes) => {
-//         res.send(dbRes.rows);
-//       })
-//       .catch((dbErr) => {
-//         console.log('error getting books', dbErr);
-//         res.sendStatus(500);
-//       });
-//   });
 // POST
+trollRouter.post('/', (req, res) =>{
+    console.log('POST /troll');
+    console.log(req.body);
+    let sqlQuery = `
+    INSERT INTO "troll"
+    ("name", "notes", "head", "body")
+    VALUES
+    ($1, $2, $3, $4);
+    `
+    let sqlValues = [req.body.name, req.body.notes, req.body.head, req.body.body];
+    pool.query(sqlQuery, sqlValues)
+        .then((dbRes) => {
+            res.sendStatus(201);
+        }).catch((dbErr) => {
+            console.log('Error in POST /troll', dbErr);
+        });
+});
+
+
+// todoRouter.post('/', (req, res) => {
+//     console.log('POST /todo');
+//     console.log(req.body);
+//     let sqlQuery = `
+//     INSERT INTO "todo"
+//     ("task", "edit", "complete")
+//     VALUES
+//     ($1, $2, $3);
+//     `
+//     let sqlValues = [req.body.task, req.body.edit, req.body.complete];
+//     pool.query(sqlQuery, sqlValues)
+//         .then((dbRes) => {
+//             res.sendStatus(201);
+//         }).catch((dbErr) => {
+//             console.log('Error in POST /todo', dbErr);
+//         })
+// })
 
 // PUT
 
