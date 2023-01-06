@@ -26,11 +26,11 @@ trollRouter.post('/', (req, res) =>{
     console.log(req.body);
     let sqlQuery = `
     INSERT INTO "troll"
-    ("name", "notes", "head", "body")
+    ("name", "notes", "head", "body", "render")
     VALUES
-    ($1, $2, $3, $4);
+    ($1, $2, $3, $4, $5);
     `
-    let sqlValues = [req.body.name, req.body.notes, req.body.head, req.body.body];
+    let sqlValues = [req.body.name, req.body.notes, req.body.head, req.body.body, req.body.render];
     pool.query(sqlQuery, sqlValues)
         .then((dbRes) => {
             res.sendStatus(201);
@@ -82,29 +82,28 @@ trollRouter.put('/head/:id', (req, res) => {
         });
 });
 
+trollRouter.put('/render/:id', (req, res) => {
+    console.log('req.params:', req.params);
+    console.log('req.body:', req.body);
+    let idToUpdate = req.params.id;
+    let newRender = req.body.render;
+    
+    let sqlQuery = `
+        UPDATE "troll"
+        SET "render"=$1
+        WHERE "id"=$2
+    `
+    let sqlValues = [newRender, idToUpdate];
 
-// todoRouter.put('/:id', (req, res) => {
-//     console.log('req.params:', req.params);
-//     console.log('req.body:', req.body);
-//     let idToUpdate = req.params.id;
-//     let newBody = req.body.body;
-  
-//     let sqlQuery = `
-//       UPDATE "todo"
-//           SET "body"=$1
-//           WHERE "id"=$2;
-//     ` 
-//     let sqlValues = [newBody, idToUpdate];
-  
-//     pool.query(sqlQuery, sqlValues)
-//       .then((dbRes) => {
-//         res.sendStatus(200);
-//       })
-//       .catch((dbErr) => {
-//         console.log('Error broke in PUT', dbErr);
-//         res.sendStatus(500);
-//       })
-//   });
+    pool.query(sqlQuery, sqlValues)
+        .then((dbRes) => {
+            res.sendStatus(200);
+        })
+        .catch((dbErr) => {
+            console.log('Error in render PUT', dbErr);
+        });
+});
+
 // DELETE
 trollRouter.delete('/:id', (req, res) => {
     console.log(req.params);

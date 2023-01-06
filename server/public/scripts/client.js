@@ -7,7 +7,13 @@ function onReady() {
   $('body').on('click', '.delete', deleteTroll);
   $('body').on('click', '.head_toggle', toggleHead);
   $('body').on('click', '.body_toggle', toggleBody);
+  $('body').on('click', '.render_troll_toggle', toggleRender);
 }
+// renderTroll render the selected troll on the DOM
+function renderTroll(troll){
+
+}
+
 // GET and render troll data to the table
 function fetchAndRenderTroll(){
   console.log('in fetchAndRenderTroll');
@@ -23,7 +29,7 @@ function fetchAndRenderTroll(){
         <td>${troll.name}</td>
         <td>${troll.notes}</td>
         <td>
-          <div class="toggle">
+          <div class="toggle_head">
             <input 
             class="head_toggle" 
             type="checkbox"
@@ -32,7 +38,7 @@ function fetchAndRenderTroll(){
           </div>
         </td>
         <td>
-          <div class="toggle">
+          <div class="toggle_body">
             <input 
             class="body_toggle" 
             type="checkbox"
@@ -41,6 +47,15 @@ function fetchAndRenderTroll(){
           </div>
         </td>
         <td><button type="button" class="delete">DELETE</button></td>
+        <td>
+        <div class="toggle_render">
+          <input 
+          class="render_troll_toggle" 
+          type="checkbox"
+          ${troll.render ? 'checked' : ''}
+          />
+        </div>
+        </td>
       </tr>
       `);
     }
@@ -60,11 +75,13 @@ function buildTroll(){
   let newNote = $('#trollNotesIn').val();
   let newHead = 'true';
   let newBody = 'true';
+  let newRender = 'false';
   let newTroll = {
     name: newName,
     notes: newNote,
     head: newHead,
-    body: newBody
+    body: newBody,
+    render: newRender
   };
   $.ajax({
     method: 'POST',
@@ -124,6 +141,22 @@ function toggleHead(){
       fetchAndRenderTroll();
   }).catch((err) => {
       console.log('Error in toggleHead', err);
+  })
+}
+
+function toggleRender(){
+  let render = $(this).is(':checked');
+  let idToUpdate = $(this).closest('tr').data().id;
+  console.log('toggleRender id:', idToUpdate, render);
+
+  $.ajax({
+      method: 'PUT',
+      url: `/troll/render/${idToUpdate}`,
+      data: {render}
+  }).then((res) => {
+      fetchAndRenderTroll();
+  }).catch((err) => {
+      console.log('Error in toggleRender', err);
   })
 }
 
