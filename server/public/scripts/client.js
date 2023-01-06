@@ -5,6 +5,8 @@ function onReady() {
   fetchAndRenderTroll()
   $('body').on('click', '#addTrollButton', buildTroll);
   $('body').on('click', '.delete', deleteTroll);
+  $('body').on('click', '.head_toggle', toggleHead);
+  $('body').on('click', '.body_toggle', toggleBody);
 }
 // GET and render troll data to the table
 function fetchAndRenderTroll(){
@@ -20,8 +22,24 @@ function fetchAndRenderTroll(){
       <tr data-id=${troll.id}>
         <td>${troll.name}</td>
         <td>${troll.notes}</td>
-        <td>${troll.head}</td>
-        <td>${troll.body}</td>
+        <td>
+          <div class="toggle">
+            <input 
+            class="head_toggle" 
+            type="checkbox"
+            ${troll.head ? 'checked' : ''}
+            />
+          </div>
+        </td>
+        <td>
+          <div class="toggle">
+            <input 
+            class="body_toggle" 
+            type="checkbox"
+            ${troll.body ? 'checked' : ''}
+            />
+          </div>
+        </td>
         <td><button type="button" class="delete">DELETE</button></td>
       </tr>
       `);
@@ -30,6 +48,11 @@ function fetchAndRenderTroll(){
     console.log('error in GET', error);
 });
 }
+
+//<td>${troll.head}</td>
+//<td>${troll.body}</td>
+//
+
 // POST
 function buildTroll(){
   console.log('in buildTroll');
@@ -71,17 +94,37 @@ function deleteTroll(){
   });
 };
 
-// function deleteToDo(){
-//   console.log('in delete');
-//   let idToDelete = $(this).parent().parent().data().id;
-//   console.log(idToDelete);
-//   $.ajax({
-//     method: 'DELETE',
-//     url: `/todo/${idToDelete}`
-//   }).then((response) => {
-//       fetchAndRenderToDo();
-//   }).catch((error) => {
-//     console.log('Error in deleteToDo:', error);
-//   })
-// }
+// PUT
+function toggleBody(){
+  let body = $(this).is(':checked');
+  let idToUpdate = $(this).closest('tr').data().id;
+  console.log('toggleBody id:', idToUpdate, body);
+
+  $.ajax({
+      method: 'PUT',
+      url: `/troll/body/${idToUpdate}`,
+      data: {body}
+  }).then((res) => {
+      fetchAndRenderTroll();
+  }).catch((err) => {
+      console.log('Error in toggleBody', err);
+  })
+}
+
+function toggleHead(){
+  let head = $(this).is(':checked');
+  let idToUpdate = $(this).closest('tr').data().id;
+  console.log('toggleHead id:', idToUpdate, head);
+
+  $.ajax({
+      method: 'PUT',
+      url: `/troll/head/${idToUpdate}`,
+      data: {head}
+  }).then((res) => {
+      fetchAndRenderTroll();
+  }).catch((err) => {
+      console.log('Error in toggleHead', err);
+  })
+}
+
 

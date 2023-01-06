@@ -39,7 +39,72 @@ trollRouter.post('/', (req, res) =>{
         });
 });
 // PUT
+trollRouter.put('/body/:id', (req, res) => {
+    console.log('req.params:', req.params);
+    console.log('req.body:', req.body);
+    let idToUpdate = req.params.id;
+    let newBody = req.body.body;
+    
+    let sqlQuery = `
+        UPDATE "troll"
+        SET "body"=$1
+        WHERE "id"=$2
+    `
+    let sqlValues = [newBody, idToUpdate];
 
+    pool.query(sqlQuery, sqlValues)
+        .then((dbRes) => {
+            res.sendStatus(200);
+        })
+        .catch((dbErr) => {
+            console.log('Error in PUT', dbErr);
+        });
+});
+trollRouter.put('/head/:id', (req, res) => {
+    console.log('req.params:', req.params);
+    console.log('req.body:', req.body);
+    let idToUpdate = req.params.id;
+    let newHead = req.body.head;
+    
+    let sqlQuery = `
+        UPDATE "troll"
+        SET "head"=$1
+        WHERE "id"=$2
+    `
+    let sqlValues = [newHead, idToUpdate];
+
+    pool.query(sqlQuery, sqlValues)
+        .then((dbRes) => {
+            res.sendStatus(200);
+        })
+        .catch((dbErr) => {
+            console.log('Error in PUT', dbErr);
+        });
+});
+
+
+// todoRouter.put('/:id', (req, res) => {
+//     console.log('req.params:', req.params);
+//     console.log('req.body:', req.body);
+//     let idToUpdate = req.params.id;
+//     let newBody = req.body.body;
+  
+//     let sqlQuery = `
+//       UPDATE "todo"
+//           SET "body"=$1
+//           WHERE "id"=$2;
+//     ` 
+//     let sqlValues = [newBody, idToUpdate];
+  
+//     pool.query(sqlQuery, sqlValues)
+//       .then((dbRes) => {
+//         res.sendStatus(200);
+//       })
+//       .catch((dbErr) => {
+//         console.log('Error broke in PUT', dbErr);
+//         res.sendStatus(500);
+//       })
+//   });
 // DELETE
 trollRouter.delete('/:id', (req, res) => {
     console.log(req.params);
@@ -57,21 +122,6 @@ trollRouter.delete('/:id', (req, res) => {
         });
 });
 
-// todoRouter.delete('/:id', (req, res) => {
-//     console.log(req.params);
-//     let idToDelete = req.params.id;
-//     let sqlQuery = `
-//     DELETE FROM "todo"
-//     WHERE "id"=$1;
-//     `
-//     let sqlValues = [idToDelete];
-//     pool.query(sqlQuery, sqlValues)
-//         .then((dbRes) => {
-//             res.sendStatus(200);
-//         })
-//         .catch((dbErr) => {
-//             console.log('Error in Delete:', dbErr);
-//         })
-// });
+
 // *****
 module.exports = trollRouter;
