@@ -1,7 +1,32 @@
 body {
-  background-color: #fbf0f0;
+  background-color: #dc3a3a;
 }
 
 h1 {
-  color: #7c7575;
+  color: #000000;
 }
+
+#trollElement{
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+#trollBody{
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+#trollHead{
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+h1 {
+  text-align: center;
+}
+

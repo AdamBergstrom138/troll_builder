@@ -11,7 +11,13 @@ function onReady() {
 }
 // renderTroll render the selected troll on the DOM
 function renderTroll(troll){
-
+  if(troll.render === true){
+    $('#render').append(`
+    <img id="trollElement" src="./images/troll_element.png" />
+    <img id="trollBody" src="./images/troll_body.png"/>
+    <img id="trollHead" src="./images/troll_head.png" />
+    `)
+  } 
 }
 
 // GET and render troll data to the table
@@ -58,6 +64,7 @@ function fetchAndRenderTroll(){
         </td>
       </tr>
       `);
+      renderTroll(troll)
     }
   }).catch((error) => {
     console.log('error in GET', error);
