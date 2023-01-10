@@ -59,3 +59,64 @@ td {
   border: 1px solid black;
 }
 
+/* Troll Stuff */
+/* Troll 1 */
+.trollElement1{
+  position: absolute;
+  top: 50;
+  left: 50;
+  z-index: 0;
+  margin: 2px;
+  width: 256px;
+  height: 256px;
+}
+
+.trollBody1{
+  position: absolute;
+  top: 50;
+  left: 50;
+  z-index: 0;
+  margin: 2px;
+  width: 256px;
+  height: 256px;
+}
+
+.trollHead1{
+  position: absolute;
+  top: 50;
+  left: 50;
+  z-index: 0;
+  margin: 2px;
+  width: 256px;
+  height: 256px;
+}
+/* Troll 2 */
+.trollElement2{
+  position: absolute;
+  top: 50;
+  left: 150;
+  z-index: 0;
+  margin: 2px;
+  width: 256px;
+  height: 256px;
+}
+
+.trollBody2{
+  position: absolute;
+  top: 50;
+  left: 150;
+  z-index: 0;
+  margin: 2px;
+  width: 256px;
+  height: 256px;
+}
+
+.trollHead2{
+  position: absolute;
+  top: 50;
+  left: 150;
+  z-index: 0;
+  margin: 2px;
+  width: 256px;
+  height: 256px;
+}
