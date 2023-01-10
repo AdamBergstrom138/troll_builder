@@ -9,19 +9,41 @@ function onReady() {
   $('body').on('click', '.body_toggle', toggleBody);
   $('body').on('click', '.render_troll_toggle', toggleRender);
 }
+// global troll count
+let trollCount=0;
 // renderTroll render the selected troll on the DOM
 function renderTroll(troll){
-  if(troll.render === true){
-    $('#render').append(`
-    <img id="trollElement" src="./images/troll_element.png" />
-    <img id="trollBody" src="./images/troll_body.png"/>
-    <img id="trollHead" src="./images/troll_head.png" />
-    `)
-  } 
-}
+    if(troll.render === true && trollCount < 1){
+      console.log('troll render 1');
+      $('#render').append(`
+      <div>
+        <h3>${troll.name}</h4>
+      </div>
+      <div class="troll${troll.id}">
+        <img class="trollElement" src="./images/troll_element.png" />
+        <img class="trollBody" src="./images/troll_body.png"/>
+        <img class="trollHead" src="./images/troll_head.png" />
+      </div>
+      `)
+    }else if(troll.render === true && trollCount === 1){
+      console.log('troll render 2');
+      $('#render2').append(`
+      <div>
+        <h3>${troll.name}</h4>
+      </div>
+      <div class="troll${troll.id}">
+        <img class="trollElement" src="./images/troll_element.png" />
+        <img class="trollBody" src="./images/troll_body.png"/>
+        <img class="trollHead" src="./images/troll_head.png" />
+      </div>
+      `)
+    }
+  }
+
 
 // GET and render troll data to the table
 function fetchAndRenderTroll(){
+  trollCount = 0;
   console.log('in fetchAndRenderTroll');
   $.ajax({
     type: 'GET',
@@ -30,6 +52,7 @@ function fetchAndRenderTroll(){
     $('#trollTable').empty();
     console.log(trolls);
     for(let troll of trolls){
+      trollCount++;
       $('#trollTable').append(`
       <tr data-id=${troll.id}>
         <td>${troll.name}</td>
